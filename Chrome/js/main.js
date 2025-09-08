@@ -32,16 +32,18 @@ function translate(canRead) {
 }
 
 function log(json) {
-    window.console.group('%c%s', CSS, json[5][0][0]);
+    console.group('%c%s', CSS, Date.now());
     if (json.translationResponse !== undefined) {
-        window.console.log('%c%s', CSS, json.translationResponse);
+        console.log('%c%s', CSS, json.translationResponse);
     } else {
         if (json[1]) {
-            json[1].forEach(value => window.console.log('%c%s', CSS, resolve(value[0]) + reduce(value[1])));
+            json[1].forEach(value => console.log('%c%s', CSS, resolve(value[0]) + reduce(value[1])));
         }
-        json[0].forEach(value => window.console.log('%c%s', CSS, value[0] !== null ? value[0] : ''));
+        json[0]
+            .filter(value => value[0] != null)
+            .forEach(value => console.log('%c%s', CSS, value[1] + '\n' + value[0]));
     }
-    window.console.groupEnd();
+    console.groupEnd();
 }
 
 function resolve(str) {
